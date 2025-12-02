@@ -1,6 +1,4 @@
-/* =====================================================
-   PRODUCT CLASS
-===================================================== */
+/*PRODUCT CLASS */
 class Product {
     constructor(productID, name, description, price, stockQuantity, ecoFriendly) {
         this.productID = productID;
@@ -12,9 +10,7 @@ class Product {
     }
 }
 
-/* =====================================================
-   CART ITEM CLASS
-===================================================== */
+/*CART ITEM CLASS*/
 class CartItem {
     constructor(cartItemID, product, quantity) {
         this.cartItemID = cartItemID;
@@ -27,9 +23,7 @@ class CartItem {
     }
 }
 
-/* =====================================================
-   SHOPPING CART CLASS
-===================================================== */
+/* SHOPPING CART CLASS*/
 class ShoppingCart {
     constructor(cartID, clientID) {
         this.cartID = cartID;
@@ -57,9 +51,7 @@ class ShoppingCart {
     }
 }
 
-/* =====================================================
-   PAYMENT CLASS
-===================================================== */
+/* PAYMENT CLASS*/
 class Payment {
     constructor(paymentID, orderID, amount, paymentMethod) {
         this.paymentID = paymentID;
@@ -75,18 +67,14 @@ class Payment {
     }
 }
 
-/* =====================================================
-   FACTORY PATTERN FOR PRODUCTS
-===================================================== */
+/*  FACTORY PATTERN FOR PRODUCTS*/
 const ProductFactory = {
     create(id, name, desc, price, stock) {
         return new Product(id, name, desc, price, stock, true);
     }
 };
 
-/* =====================================================
-   PRODUCT MODULE
-===================================================== */
+/* PRODUCT MODULE*/
 const ProductModule = (() => {
     const products = [
         ProductFactory.create(1, "Eco Cleanser", "Gentle skin cleanser", 12.99, 50),
