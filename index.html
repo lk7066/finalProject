@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GlowCart – Skincare Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>GlowCart</h1>
+</header>
+
+<main>
+
+    <!-- PRODUCT LIST -->
+    <section id="productContainer"></section>
+
+    <!-- CART PANEL -->
+    <aside id="cartPanel">
+        <h2>Your Cart</h2>
+        <ul id="cartList"></ul>
+        <p id="cartTotal">Total: $0.00</p>
+        <button id="checkoutBtn" class="checkoutBtn">Checkout</button>
+    </aside>
+
+</main>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="modal hidden">
+  <div class="modalBox">
+    <h2>Choose Payment Method</h2>
+
+    <div id="paymentButtons">
+        <button class="paymentBtn" data-method="card">Credit/Debit Card</button>
+        <button class="paymentBtn" data-method="paypal">PayPal</button>
+        <button class="paymentBtn" data-method="cod">Cash on Delivery</button>
+    </div>
+
+    <!-- Dynamic Inputs -->
+    <div id="paymentFormContainer"></div>
+
+    <button id="closeModal" class="closeBtn">Cancel</button>
+  </div>
+</div>
+
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
