@@ -83,15 +83,20 @@ main {
     padding: 8px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .removeBtn {
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 4px 7px;
-    border-radius: 3px;
-    cursor: pointer;
+    margin: 0 !important;
+    align-items: center !important;
+    background: #d9534f !important;  
+    color: white !important;
+    border: none !important;
+    height: auto !important;
+    padding: 4px 7px !important;
+    width: 50px !important;
+    border-radius: 3px !important;
+    cursor: pointer !important;
 }
 
 .removeBtn:hover {
