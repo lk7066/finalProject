@@ -86,3 +86,53 @@ const ProductModule = (() => {
         getAll: () => products
     };
 })();
+
+/* OBSERVER PATTERN */
+const CartObservers = [];
+
+function notifyCartObservers() {
+    CartObservers.forEach(cb => cb());
+}
+
+/* UI MODULE (Render Products + Cart) */
+const UIModule = (() => {
+
+    const renderProducts = () => {
+        const container = document.getElementById("productContainer");
+        container.innerHTML = "";
+
+        ProductModule.getAll().forEach(product => {
+            const card = document.createElement("div");
+            card.className = "productCard";
+
+            card.innerHTML = `
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p><strong>$${product.price}</strong></p>
+                <button data-id="${product.productID}">Add to Cart</button>
+            `;
+
+            container.appendChild(card);
+        });
+    };
+
+    const renderCart = () => {
+        const list = document.getElementById("cartList");
+        const total = document.getElementById("cartTotal");
+
+        list.innerHTML = "";
+        cart.cartItems.forEach(item => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                ${item.product.name} x ${item.quantity} = $${item.getSubTotal().toFixed(2)}
+                <button class="removeBtn" data-remove="${item.cartItemID}">X</button>
+            `;
+            list.appendChild(li);
+        });
+
+        total.textContent = `Total: $${cart.calculateTotal().toFixed(2)}`;
+    };
+
+    return { renderProducts, renderCart };
+
+})();
