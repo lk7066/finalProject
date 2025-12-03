@@ -136,3 +136,102 @@ const UIModule = (() => {
     return { renderProducts, renderCart };
 
 })();
+/*  MAIN APP CONTROLLER*/
+const AppController = (() => {
+
+    // Single shopping cart instance
+    window.cart = new ShoppingCart(1, 1);
+
+    CartObservers.push(UIModule.renderCart);
+
+    function setupEvents() {
+
+        // ADD TO CART
+        document.getElementById("productContainer").addEventListener("click", e => {
+            if (e.target.tagName === "BUTTON") {
+                const id = parseInt(e.target.dataset.id);
+                const product = ProductModule.getAll().find(p => p.productID === id);
+                cart.addItem(product);
+                notifyCartObservers();
+            }
+        });
+
+        // REMOVE ITEM FROM CART
+        document.getElementById("cartList").addEventListener("click", e => {
+            if (e.target.classList.contains("removeBtn")) {
+                const id = parseInt(e.target.dataset.remove);
+                cart.removeItem(id);
+                notifyCartObservers();
+            }
+        });
+
+        // OPEN CHECKOUT MODAL
+        document.getElementById("checkoutBtn").addEventListener("click", () => {
+            if (cart.cartItems.length === 0) return alert("Cart is empty!");
+            document.getElementById("checkoutModal").classList.remove("hidden");
+        });
+
+        // CLOSE MODAL
+        document.getElementById("closeModal").addEventListener("click", () => {
+            document.getElementById("checkoutModal").classList.add("hidden");
+            document.getElementById("paymentFormContainer").innerHTML = "";
+        });
+
+        // PAYMENT METHOD HANDLING
+        document.getElementById("paymentButtons").addEventListener("click", e => {
+            if (!e.target.classList.contains("paymentBtn")) return;
+
+            const method = e.target.dataset.method;
+            const container = document.getElementById("paymentFormContainer");
+
+            if (method === "card") {
+                container.innerHTML = `
+                    <h3>Credit/Debit Card</h3>
+                    <input type="text" placeholder="Card Number">
+                    <input type="text" placeholder="Expiration MM/YY">
+                    <input type="text" placeholder="CVV">
+                    <button class="paymentBtn" onclick="finishPayment()">Pay Now</button>
+                `;
+            }
+
+            if (method === "paypal") {
+                container.innerHTML = `
+                    <h3>PayPal Payment</h3>
+                    <input type="email" placeholder="PayPal Email">
+                    <button class="paymentBtn" onclick="finishPayment()">Pay with PayPal</button>
+                `;
+            }
+
+            if (method === "cod") {
+                container.innerHTML = `
+                    <h3>Cash on Delivery</h3>
+                    <p>You will pay when the order arrives.</p>
+                    <button class="paymentBtn" onclick="finishPayment()">Confirm Order</button>
+                `;
+            }
+        });
+    }
+
+    return {
+        start() {
+            UIModule.renderProducts();
+            UIModule.renderCart();
+            setupEvents();
+        }
+    };
+})();
+
+/*FINAL PAYMENT HANDLER */
+function finishPayment() {
+    alert("Payment Successful! 🎉");
+
+    document.getElementById("checkoutModal").classList.add("hidden");
+
+    cart.clearCart();
+    notifyCartObservers();
+}
+
+/* INITIALIZATION */
+document.addEventListener("DOMContentLoaded", () => {
+    AppController.start();
+});
