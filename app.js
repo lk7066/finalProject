@@ -8,7 +8,18 @@ class Product {
         this.stockQuantity = stockQuantity;
         this.ecoFriendly = ecoFriendly;
     }
+    updateStockQuantity(amount) {
+        this.stockQuantity += amount;
+        if (this.stockQuantity < 0) {
+            this.stockQuantity = 0;
+        }
+    }
+
+    getProductInfo() {
+        return `${this.name} - ${this.description} ($${this.price}, Stock: ${this.stockQuantity})`;
+    }
 }
+
 
 /*CART ITEM CLASS*/
 class CartItem {
@@ -77,9 +88,9 @@ const ProductFactory = {
 /* PRODUCT MODULE*/
 const ProductModule = (() => {
     const products = [
-        ProductFactory.create(1, "Eco Cleanser", "Gentle skin cleanser", 12.99, 50),
-        ProductFactory.create(2, "Glow Serum", "Hydrating glow serum", 18.99, 40),
-        ProductFactory.create(3, "Hydra Cream", "Deep moisture cream", 15.50, 30)
+        ProductFactory.create(1, "Eco Cleanser", "A gentle, eco-friendly skin cleanser designed for daily use and suitable for all skin types.", 12.99, 50),
+        ProductFactory.create(2, "Glow Serum", "A hydrating glow serum that brightens the skin and enhances radiance with lightweight nourishment.", 18.99, 40),
+        ProductFactory.create(3, "Hydra Cream", "A deep-moisture cream formulated to restore hydration and leave skin smooth and refreshed.", 15.50, 30)
     ];
 
     return {
@@ -106,13 +117,14 @@ const UIModule = (() => {
             card.className = "productCard";
 
             card.innerHTML = `
-                <h3>${product.name}</h3>
-                <p>${product.description}</p>
-                <p><strong>$${product.price}</strong></p>
-                <button data-id="${product.productID}">Add to Cart</button>
-            `;
-
-            container.appendChild(card);
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <p><strong>$${product.price}</strong></p>
+        <p class="stockText">In Stock: ${product.stockQuantity}</p>
+        <button data-id="${product.productID}">Add to Cart</button>
+        `;
+    
+        container.appendChild(card);
         });
     };
 
